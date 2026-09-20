@@ -2,9 +2,9 @@
 
 ## Objective
 
-Establish the initial foundation of Shopline as a clean Go backend application.
+Establish the initial foundation of Basket as a clean Go backend application.
 
-At the end of this milestone, Shopline should be able to start as a standalone Go application, expose a basic HTTP endpoint, connect to PostgreSQL, and shut down gracefully.
+At the end of this milestone, Basket should be able to start as a standalone Go application, expose a basic HTTP endpoint, connect to PostgreSQL, and shut down gracefully.
 
 This milestone intentionally avoids unnecessary infrastructure and external services.
 
@@ -21,7 +21,7 @@ The project should follow a structure that allows the application to grow withou
 Initial structure:
 
 ```text
-shopline/
+basket/
 ├── cmd/
 │   └── api/
 │       └── main.go
@@ -84,7 +84,7 @@ The application should fail fast when required configuration is invalid or missi
 
 ### 4. PostgreSQL Connection
 
-Set up PostgreSQL as the primary database for Shopline.
+Set up PostgreSQL as the primary database for Basket.
 
 The application should:
 
@@ -266,13 +266,13 @@ M01 is complete when all of the following are true:
 * The application handles SIGINT/SIGTERM gracefully.
 * PostgreSQL connections are closed during shutdown.
 * Database migrations can be executed successfully.
-* The repository contains documentation explaining how to run Shopline locally.
+* The repository contains documentation explaining how to run Basket locally.
 * No unnecessary external infrastructure is required to run M01.
 
 ---
 
 ## Expected Result
 
-After completing M01, a developer should be able to clone the repository, configure PostgreSQL, start Shopline, verify that the API is healthy, and stop the application cleanly.
+After completing M01, a developer should be able to clone the repository, configure PostgreSQL, start Basket, verify that the API is healthy, and stop the application cleanly.
 
 The project should now provide a stable foundation for implementing the Product Catalog in M02.

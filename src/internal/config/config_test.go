@@ -5,7 +5,7 @@ import "testing"
 func TestLoadUsesDefaults(t *testing.T) {
 	t.Setenv("HTTP_ADDR", "")
 	t.Setenv("APP_ENV", "")
-	t.Setenv("DATABASE_URL", "postgres://localhost/shopline")
+	t.Setenv("DATABASE_URL", "postgres://localhost/basket")
 
 	configuration, err := Load()
 	if err != nil {
@@ -25,7 +25,7 @@ func TestLoadRejectsMissingDatabaseURL(t *testing.T) {
 }
 
 func TestLoadRejectsInvalidDatabaseURL(t *testing.T) {
-	t.Setenv("DATABASE_URL", "http://localhost/shopline")
+	t.Setenv("DATABASE_URL", "http://localhost/basket")
 
 	if _, err := Load(); err == nil {
 		t.Fatal("Load() accepted an invalid PostgreSQL URL")

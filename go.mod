@@ -1,4 +1,4 @@
-module github.com/amiri/shopline
+module github.com/irvaniamirali/basket
 
 go 1.25.0
 

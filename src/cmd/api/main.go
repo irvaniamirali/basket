@@ -10,9 +10,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/amiri/shopline/src/internal/config"
-	"github.com/amiri/shopline/src/internal/database"
-	"github.com/amiri/shopline/src/internal/httpapi"
+	"github.com/irvaniamirali/basket/src/internal/config"
+	"github.com/irvaniamirali/basket/src/internal/database"
+	"github.com/irvaniamirali/basket/src/internal/httpapi"
 )
 
 func main() {

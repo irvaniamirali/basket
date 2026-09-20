@@ -1,6 +1,6 @@
-# Shopline Roadmap
+# Basket Roadmap
 
-Shopline is a production-oriented e-commerce backend built with Go.
+Basket is a production-oriented e-commerce backend built with Go.
 
 The project is designed to model real backend engineering problems such as transactional workflows, inventory consistency, concurrency, authentication, payment processing, asynchronous events, caching, observability, testing, and deployment.
 
@@ -112,7 +112,7 @@ A message broker will be introduced where event-driven communication provides a 
 
 ### M11 — Observability
 
-Make Shopline observable as a real backend service.
+Make Basket observable as a real backend service.
 
 Introduce structured logging, metrics, health checks, request tracing, and diagnostic information where appropriate.
 
@@ -144,7 +144,7 @@ Containerization will be introduced here or earlier if a concrete development or
 
 ### M14 — Production Deployment
 
-Deploy Shopline as a real service.
+Deploy Basket as a real service.
 
 The deployment will include the infrastructure required by the application and will address configuration, secrets, persistence, HTTPS, health checks, and recovery.
 
@@ -170,7 +170,7 @@ The first priority is a correct and maintainable system. Performance and distrib
 
 ### Complexity Must Have a Reason
 
-A technology should only be introduced when it solves a concrete problem in Shopline.
+A technology should only be introduced when it solves a concrete problem in Basket.
 
 ### Keep the System Working
 

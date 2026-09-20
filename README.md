@@ -1,6 +1,6 @@
-# Shopline
+# Basket
 
-Shopline is a Go e-commerce backend built as a modular monolith.
+Basket is a Go e-commerce backend built as a modular monolith.
 
 ## Run locally
 
@@ -11,7 +11,7 @@ Create a database, then configure the application environment:
 ```sh
 export HTTP_ADDR=:8080
 export APP_ENV=development
-export DATABASE_URL='postgres://user:password@localhost:5432/shopline?sslmode=disable'
+export DATABASE_URL='postgres://user:password@localhost:5432/basket?sslmode=disable'
 ```
 
 Apply migrations with Goose:
