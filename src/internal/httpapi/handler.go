@@ -12,11 +12,15 @@ type Handler struct {
 	logger *slog.Logger
 }
 
-func NewHandler(logger *slog.Logger) http.Handler {
-	return NewRouter(logger)
+type RouteRegistrar interface {
+	Register(group *gin.RouterGroup)
 }
 
-func NewRouter(logger *slog.Logger) *gin.Engine {
+func NewHandler(logger *slog.Logger, registrars ...RouteRegistrar) http.Handler {
+	return NewRouter(logger, registrars...)
+}
+
+func NewRouter(logger *slog.Logger, registrars ...RouteRegistrar) *gin.Engine {
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.New()
 	router.HandleMethodNotAllowed = true
@@ -27,16 +31,19 @@ func NewRouter(logger *slog.Logger) *gin.Engine {
 		writeJSON(c, http.StatusOK, map[string]string{"status": "healthy"})
 	})
 
+	v1 := router.Group("/v1")
+	for _, registrar := range registrars {
+		if registrar != nil {
+			registrar.Register(v1)
+		}
+	}
+
 	router.NoRoute(func(c *gin.Context) {
 		writeError(c, http.StatusNotFound, "not_found", "resource not found")
 	})
 
 	router.NoMethod(func(c *gin.Context) {
-		if c.Request.URL.Path == "/health" {
-			writeError(c, http.StatusMethodNotAllowed, "method_not_allowed", "method not allowed")
-			return
-		}
-		writeError(c, http.StatusNotFound, "not_found", "resource not found")
+		writeError(c, http.StatusMethodNotAllowed, "method_not_allowed", "method not allowed")
 	})
 
 	return router

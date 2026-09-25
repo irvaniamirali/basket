@@ -12,6 +12,8 @@ import (
 
 	"github.com/irvaniamirali/basket/src/internal/config"
 	"github.com/irvaniamirali/basket/src/internal/database"
+	"github.com/irvaniamirali/basket/src/internal/domain/product"
+	"github.com/irvaniamirali/basket/src/internal/domain/product/usecase"
 	"github.com/irvaniamirali/basket/src/internal/httpapi"
 )
 
@@ -37,9 +39,27 @@ func run(logger *slog.Logger) error {
 	defer databasePool.Close()
 	logger.Info("database connection verified")
 
+	gormDB, err := database.OpenGORM(configuration.DatabaseURL)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if closeErr := database.CloseGORM(gormDB); closeErr != nil {
+			logger.Error("close gorm connection", "error", closeErr)
+		}
+	}()
+
+	productRepository := product.NewPostgresRepository(gormDB)
+	productHandler := product.NewHandler(
+		usecase.NewCreateProduct(productRepository),
+		usecase.NewListProducts(productRepository),
+		usecase.NewGetProduct(productRepository),
+		logger,
+	)
+
 	server := &http.Server{
 		Addr:              configuration.HTTPAddress,
-		Handler:           httpapi.NewRouter(logger),
+		Handler:           httpapi.NewRouter(logger, productHandler),
 		ReadHeaderTimeout: 5 * time.Second,
 		ReadTimeout:       10 * time.Second,
 		WriteTimeout:      10 * time.Second,
