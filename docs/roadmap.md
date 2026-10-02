@@ -1,34 +1,45 @@
 # Basket
 
-Basket is a production-oriented e-commerce backend built with Python, Django, and Django REST Framework.
+Basket is an e-commerce project with a Django REST Framework backend and React storefront. The first six milestones are implemented and provide a runnable local shop, including an external ZarinPal payment flow.
 
-The project is designed to go beyond a simple CRUD application and focus on real-world backend engineering practices, including API design, authentication, authorization, database design, testing, background processing, caching, and production readiness.
+The roadmap below separates implemented functionality from future work. Redis, Celery, Docker deployment, background notifications, caching, and production hardening are not currently implemented.
 
-## Tech Stack
+## Current Tech Stack
 
-* Python
-* Django
-* Django REST Framework
-* PostgreSQL
-* Redis
-* Celery
-* Docker
-* Pytest
+* Python, Django, and Django REST Framework
+* PostgreSQL and psycopg
+* React, TypeScript, and Vite
+* pytest/pytest-django and Ruff; Vitest, Oxlint, and Prettier
+
+Redis, Celery, and Docker are not part of the current application stack; related
+infrastructure work is planned in later milestones.
 
 ## Roadmap
 
 | ID  | Milestone                       | Status      |
 | --- | ------------------------------- | ----------- |
-| M01 | Project Foundation              | Not Started |
-| M02 | Product Catalog                 | Not Started |
-| M03 | Users & Authentication          | Not Started |
-| M04 | Cart                            | Not Started |
-| M05 | Orders                          | Not Started |
-| M06 | Payments                        | Not Started |
-| M07 | Background Jobs & Notifications | Not Started |
-| M08 | Caching & Performance           | Not Started |
-| M09 | Testing & Quality               | Not Started |
-| M10 | Production Readiness            | Not Started |
+| M01 | Project Foundation              | Complete    |
+| M02 | Product Catalog                 | Complete    |
+| M03 | Users & Authentication          | Complete    |
+| M04 | Cart                            | Complete    |
+| M05 | Orders                          | Complete    |
+| M06 | Payments                        | Complete    |
+| M07 | Background Jobs & Notifications | Planned     |
+| M08 | Caching & Performance           | Planned     |
+| M09 | Testing & Quality               | Planned     |
+| M10 | Production Readiness            | Planned     |
+
+## Current Implementation
+
+The API supports public product reads and staff-only catalog writes, customer
+registration and DRF token authentication, user-owned carts and orders, and
+ZarinPal payment initiation and callback verification. The React storefront
+uses these APIs. Automated backend and frontend tests and local lint/format
+commands exist; M09 remains planned for its broader milestone scope rather
+than indicating that tests or checks are absent.
+
+See the [Development Guide](development.md) for setup and architecture and the
+[API Reference](api.md) for implemented routes and response examples.
 
 ## Development Principles
 
