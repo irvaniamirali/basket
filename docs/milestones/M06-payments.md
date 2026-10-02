@@ -62,6 +62,7 @@ Tests must work with sandbox mode and mocked HTTP without production credentials
 
 ```text
 POST /api/orders/{order_id}/payments/
+GET  /api/payments/{payment_id}/
 GET  /api/payments/zarinpal/callback/
 ```
 
@@ -70,6 +71,7 @@ GET  /api/payments/zarinpal/callback/
 * Return `201` with payment ID, `pending` status, and `payment_url` after a successful provider request. Do not include merchant credentials or raw provider responses.
 * Reuse an existing pending payment with an authority instead of creating duplicate provider requests. If an in-progress payment lacks an authority, return a conflict response; failed/canceled attempts allow a new attempt.
 * The callback is public because ZarinPal redirects the buyer without the API token. Authority is the lookup key, not proof of payment. Unknown authority returns `404`; malformed callbacks return `400`.
+* Authenticated payment status retrieval returns only a payment associated with the caller's order; other users receive `404`.
 * Return a stable result for callback success, cancellation, and provider failure. Never claim payment success based only on the callback query string.
 
 ## Business Rules and Idempotency
@@ -92,6 +94,7 @@ Mock all external HTTP calls. Cover:
 
 * Valid payment creation, server-derived Rial amount, provider payload, authority persistence, and payment URL.
 * Non-payable and another user's orders; existing pending-payment reuse and duplicate-attempt constraints.
+* Authenticated payment status retrieval and cross-user/anonymous access rejection.
 * Provider rejection, malformed JSON/response, network errors, and safe failure state.
 * Successful request followed by `Status=OK`, verification code `100`, reference ID storage, Payment success, and Order transition.
 * `Status=NOK`, invalid status, unknown authority, verification failure, amount mismatch, and no accidental paid state.

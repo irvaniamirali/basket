@@ -553,3 +553,35 @@ def test_already_paid_payment_skips_provider_verification(order, monkeypatch):
     assert response.status_code == 200
     assert response.data["status"] == Payment.Status.PAID
     assert not calls
+
+
+@pytest.mark.django_db
+def test_payment_status_is_available_only_to_owning_user(api_client, order):
+    payment = Payment.objects.create(order=order, amount_rials=12000)
+
+    response = api_client.get(f"/api/payments/{payment.id}/")
+
+    assert response.status_code == 200
+    assert response.data["id"] == str(payment.id)
+    assert response.data["status"] == Payment.Status.PENDING
+    assert response.data["amount_rials"] == 12000
+
+
+@pytest.mark.django_db
+def test_payment_status_is_not_visible_to_other_or_anonymous_users(
+    api_client, order
+):
+    payment = Payment.objects.create(order=order, amount_rials=12000)
+    other_user = get_user_model().objects.create_user(
+        username="other",
+        email="other@example.com",
+        password="Long-random-password-59!",
+    )
+    api_client.force_authenticate(user=other_user)
+
+    response = api_client.get(f"/api/payments/{payment.id}/")
+
+    assert response.status_code == 404
+    api_client.force_authenticate(user=None)
+    response = api_client.get(f"/api/payments/{payment.id}/")
+    assert response.status_code == 401

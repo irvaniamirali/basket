@@ -18,3 +18,7 @@ pytest
 ruff check .
 ruff format --check .
 ```
+
+## Frontend
+
+The React storefront lives in `frontend/`. Start Django using the backend setup above, then run `npm install` and `npm run dev` from `frontend/`. Vite proxies API requests to `http://127.0.0.1:8000` by default. See [frontend setup](frontend/README.md) for API and ZarinPal callback configuration.

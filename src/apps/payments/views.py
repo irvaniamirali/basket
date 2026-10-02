@@ -3,7 +3,7 @@ from decimal import Decimal
 from django.db import transaction
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
-from rest_framework import status
+from rest_framework import generics, status
 from rest_framework.exceptions import APIException, ValidationError
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -124,6 +124,15 @@ class PaymentCreateView(APIView):
             provider_message=str(error)[:255],
             updated_at=timezone.now(),
         )
+
+
+class PaymentDetailView(generics.RetrieveAPIView):
+    serializer_class = PaymentSerializer
+    permission_classes = (IsAuthenticated,)
+    lookup_url_kwarg = "payment_id"
+
+    def get_queryset(self):
+        return Payment.objects.filter(order__user=self.request.user)
 
 
 class ZarinPalCallbackView(APIView):
