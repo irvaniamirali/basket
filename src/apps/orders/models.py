@@ -11,6 +11,7 @@ from apps.products.models import Product
 class Order(models.Model):
     class Status(models.TextChoices):
         PENDING = "pending", "Pending"
+        PAID = "paid", "Paid"
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(

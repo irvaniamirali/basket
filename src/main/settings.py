@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "apps.users",
     "apps.cart",
     "apps.orders",
+    "apps.payments",
 ]
 
 REST_FRAMEWORK = {
@@ -57,6 +58,16 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,
 }
+
+ZARINPAL_MERCHANT_ID = env("ZARINPAL_MERCHANT_ID", default="")
+ZARINPAL_SANDBOX = env.bool("ZARINPAL_SANDBOX", default=DEBUG)
+ZARINPAL_CALLBACK_URL = env("ZARINPAL_CALLBACK_URL", default="")
+ZARINPAL_TIMEOUT = env.float("ZARINPAL_TIMEOUT", default=10.0)
+ZARINPAL_BASE_URL = (
+    "https://sandbox.zarinpal.com"
+    if ZARINPAL_SANDBOX
+    else "https://payment.zarinpal.com"
+)
 
 AUTH_USER_MODEL = "users.User"
 

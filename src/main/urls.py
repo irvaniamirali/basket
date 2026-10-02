@@ -7,5 +7,13 @@ urlpatterns = [
     path("api/auth/", include("apps.users.urls")),
     path("api/products/", include("apps.products.urls")),
     path("api/cart/", include("apps.cart.urls")),
+    path(
+        "api/orders/<uuid:order_id>/payments/",
+        include("apps.payments.order_urls"),
+    ),
+    path(
+        "api/payments/",
+        include("apps.payments.urls"),
+    ),
     path("api/orders/", include("apps.orders.urls")),
 ]
