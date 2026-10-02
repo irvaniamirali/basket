@@ -2,6 +2,7 @@ import uuid
 from decimal import Decimal
 
 import pytest
+from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
 
 from apps.products.models import Product
@@ -10,6 +11,16 @@ from apps.products.models import Product
 @pytest.fixture
 def api_client():
     return APIClient()
+
+
+@pytest.fixture
+def staff_user(db):
+    return get_user_model().objects.create_user(
+        username="catalog-staff",
+        email="catalog-staff@example.com",
+        password="Staff-password-59!",
+        is_staff=True,
+    )
 
 
 @pytest.fixture
@@ -35,7 +46,8 @@ def product_data(**overrides):
 
 
 @pytest.mark.django_db
-def test_create_product(api_client):
+def test_create_product(api_client, staff_user):
+    api_client.force_authenticate(user=staff_user)
     response = api_client.post("/api/products/", product_data(), format="json")
 
     assert response.status_code == 201
@@ -63,7 +75,8 @@ def test_retrieve_product(api_client, product):
 
 
 @pytest.mark.django_db
-def test_update_product(api_client, product):
+def test_update_product(api_client, product, staff_user):
+    api_client.force_authenticate(user=staff_user)
     response = api_client.patch(
         f"/api/products/{product.id}/", {"price": "15.00"}, format="json"
     )
@@ -75,7 +88,8 @@ def test_update_product(api_client, product):
 
 
 @pytest.mark.django_db
-def test_delete_product(api_client, product):
+def test_delete_product(api_client, product, staff_user):
+    api_client.force_authenticate(user=staff_user)
     response = api_client.delete(f"/api/products/{product.id}/")
 
     assert response.status_code == 204
@@ -93,7 +107,8 @@ def test_delete_product(api_client, product):
         ({"slug": "not a valid slug"}, "slug"),
     ],
 )
-def test_create_product_rejects_invalid_data(api_client, overrides, field):
+def test_create_product_rejects_invalid_data(api_client, staff_user, overrides, field):
+    api_client.force_authenticate(user=staff_user)
     response = api_client.post(
         "/api/products/", product_data(**overrides), format="json"
     )
@@ -103,7 +118,8 @@ def test_create_product_rejects_invalid_data(api_client, overrides, field):
 
 
 @pytest.mark.django_db
-def test_create_product_rejects_duplicate_slug(api_client, product):
+def test_create_product_rejects_duplicate_slug(api_client, product, staff_user):
+    api_client.force_authenticate(user=staff_user)
     response = api_client.post("/api/products/", product_data(), format="json")
 
     assert response.status_code == 400
@@ -111,7 +127,8 @@ def test_create_product_rejects_duplicate_slug(api_client, product):
 
 
 @pytest.mark.django_db
-def test_create_product_requires_name(api_client):
+def test_create_product_requires_name(api_client, staff_user):
+    api_client.force_authenticate(user=staff_user)
     data = product_data()
     del data["name"]
 

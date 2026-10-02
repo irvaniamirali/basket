@@ -3,12 +3,14 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.filters import SearchFilter
 
 from apps.products.models import Product
+from apps.products.permissions import IsStaffOrReadOnly
 from apps.products.serializers import ProductSerializer
 
 
 class ProductListCreateView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    permission_classes = (IsStaffOrReadOnly,)
     filter_backends = (SearchFilter,)
     search_fields = ("name",)
 
@@ -25,3 +27,4 @@ class ProductListCreateView(generics.ListCreateAPIView):
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    permission_classes = (IsStaffOrReadOnly,)

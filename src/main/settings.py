@@ -18,7 +18,9 @@ if env_file.is_file():
 SECRET_KEY = env("DJANGO_SECRET_KEY", default="")
 
 if not SECRET_KEY:
-    raise ImproperlyConfigured("DJANGO_SECRET_KEY must be set in the environment or .env file.")
+    raise ImproperlyConfigured(
+        "DJANGO_SECRET_KEY must be set in the environment or .env file."
+    )
 
 DEBUG = env.bool("DJANGO_DEBUG")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
@@ -26,7 +28,9 @@ ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 DATABASE_URL = env("DATABASE_URL", default="")
 
 if not DATABASE_URL:
-    raise ImproperlyConfigured("DATABASE_URL must be set in the environment or .env file.")
+    raise ImproperlyConfigured(
+        "DATABASE_URL must be set in the environment or .env file."
+    )
 
 DATABASES = {"default": env.db("DATABASE_URL")}
 
@@ -38,14 +42,36 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "rest_framework.authtoken",
     "apps.core",
     "apps.products",
+    "apps.users",
 ]
 
 REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
+    ],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,
 }
+
+AUTH_USER_MODEL = "users.User"
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
+]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
