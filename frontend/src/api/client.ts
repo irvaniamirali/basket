@@ -114,11 +114,11 @@ export const api = {
   deleteProduct(id: string) {
     return request<void>(`/products/${id}/`, { method: "DELETE" });
   },
-  productWriteCapability() {
-    return request<{ actions?: { POST?: unknown } }>("/products/", {
-      method: "OPTIONS",
-    });
-  },
+  // productWriteCapability() {
+  //   return request<{ actions?: { POST?: unknown } }>("/products/", {
+  //     method: "OPTIONS",
+  //   });
+  // },
   register(input: RegistrationInput) {
     return request<User>("/auth/register/", json("POST", input), {
       token: null,
