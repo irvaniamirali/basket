@@ -59,7 +59,7 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 10,
 }
 
-ZARINPAL_MERCHANT_ID = env("ZARINPAL_MERCHANT_ID", default="")
+ZARINPAL_MERCHANT_ID = env("ZARINPAL_MERCHANT_ID", default="zarinpal")
 ZARINPAL_SANDBOX = env.bool("ZARINPAL_SANDBOX", default=DEBUG)
 ZARINPAL_CALLBACK_URL = env("ZARINPAL_CALLBACK_URL", default="")
 ZARINPAL_TIMEOUT = env.float("ZARINPAL_TIMEOUT", default=10.0)
@@ -96,7 +96,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "main.urls"
+ROOT_URLCONF = "busket.urls"
 
 TEMPLATES = [
     {
@@ -113,8 +113,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "main.wsgi.application"
-ASGI_APPLICATION = "main.asgi.application"
+WSGI_APPLICATION = "busket.wsgi.application"
+ASGI_APPLICATION = "busket.asgi.application"
 
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = env("TIME_ZONE", default="UTC")
