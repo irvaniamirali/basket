@@ -96,7 +96,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "busket.urls"
+ROOT_URLCONF = "basket.urls"
 
 TEMPLATES = [
     {
@@ -113,8 +113,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "busket.wsgi.application"
-ASGI_APPLICATION = "busket.asgi.application"
+WSGI_APPLICATION = "basket.wsgi.application"
+ASGI_APPLICATION = "basket.asgi.application"
 
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = env("TIME_ZONE", default="UTC")

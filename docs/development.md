@@ -20,7 +20,7 @@ supported current release).
 
 ```text
 src/
-  main/                 Django settings, root URLs, ASGI and WSGI entry points
+  busket/                 Django settings, root URLs, ASGI and WSGI entry points
   apps/
     core/               Health endpoint
     products/           Catalog model, serializers, views, staff write permission
@@ -145,7 +145,7 @@ changes without writing a migration, use
 
 ## Architecture and conventions
 
-The Django project configuration is in `src/main`; domain code is grouped by
+The Django project configuration is in `../src/basket`; domain code is grouped by
 Django app under `src/apps/`. Root URL routes in `main/urls.py` delegate to
 each app's URL configuration. A request is dispatched to a DRF generic view or
 `APIView`; permissions and serializers enforce access and validate/shape data,
